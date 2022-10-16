@@ -126,11 +126,11 @@ class Database:
         sql, parameters = self.format_args(sql, parameters=kwargs)
         return self.execute(sql, parameters=parameters, commit=True)
 
-    def delete_all(self):
-        self.execute("DELETE FROM Foods WHERE True", commit=True)
+    # def delete_all(self):
+    #     self.execute("DELETE FROM Foods WHERE True", commit=True)
 
-    def drop_all(self):
-        self.execute("DROP TABLE Foods", commit=True)
+    # def drop_all(self):
+    #     self.execute("DROP TABLE Foods", commit=True)
 
     # @staticmethod
     # def format_args(sql, parameters: dict) -> tuple:
