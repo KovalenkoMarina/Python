@@ -17,8 +17,8 @@ except sqlite3.OperationalError as e:
 except Exception as e:
     print(e)
 
-db_path = Path('db_api', 'database', 'food_database.db')
-db = Database(db_path = db_path)
+# db_path = Path('db_api', 'database', 'food_database.db')
+# db = Database(db_path = db_path)
 try:
     db.create_table_foods()
 except sqlite3.OperationalError as e:
