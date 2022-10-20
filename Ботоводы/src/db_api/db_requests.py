@@ -57,48 +57,47 @@ class Database:
         sql, parameters = self.format_args(sql, parameters=kwargs)
         return self.execute(sql, parameters=parameters, commit=True)
 
- 
-    def create_table_foods(self):
+    def create_table_items(self):
         sql = """
-        CREATE TABLE Foods(
+        CREATE TABLE Items(
         id int NOT NULL,
-        name_food text,
-        count_food int,
+        name text,
+        count int,
+        photo_path text,
         PRIMARY KEY (id)
         );
         """
         self.execute(sql, commit=True)
 
-    def add_food(self, id: int, name_food: str = None, count_food: int = None):
-        sql = 'INSERT INTO Foods(id, name_food, count_food) VALUES(?, ?, ?)'
-        parameters = (id, name_food, count_food)
+    def add_item(self, id: int, name: str = None, count: int = 0, photo_path: str = ''):
+        sql = 'INSERT INTO Items(id, name, count, photo_path) VALUES(?, ?, ?, ?)'
+        parameters = (id, name, count, photo_path)
         self.execute(sql, parameters, commit=True)
 
-    def select_food_info(self, **kwargs) -> list:
-        sql = 'SELECT * FROM Foods WHERE '
+    def select_items_info(self, **kwargs) -> list:
+        sql = 'SELECT * FROM Items WHERE '
         sql, parameters = self.format_args(sql, kwargs)
         return self.execute(sql, parameters, fetchall=True)
 
-    def select_all_foods(self) -> list:
-        sql = "SELECT * FROM Foods"
+    def select_all_items(self) -> list:
+        sql = "SELECT * FROM Items"
         return self.execute(sql, fetchall=True)
 
-    def update_food_name(self, id: int, name_food: str):
-        sql = "UPDATE Foods SET name_food=? WHERE id=?"
-        return self.execute(sql, parameters=(name_food, id), commit=True)
+    def update_item_count(self, id: int, count: str):
+        sql = "UPDATE Items SET count=? WHERE id=?"
+        return self.execute(sql, parameters=(count, id), commit=True)
 
-    def delete_food(self, **kwargs):
-        sql = "DELETE FROM Foods WHERE "
-        sql, parameters = self.format_args(sql, parameters=kwargs)
-        return self.execute(sql, parameters=parameters, commit=True)
+    def get_items_count(self) -> int:
+        sql = "SELECT * FROM Items"
+        return len(self.execute(sql, fetchall=True))
 
     def delete_all(self):
         self.execute("DELETE FROM Users WHERE True", commit=True)
-        self.execute("DELETE FROM Foods WHERE True", commit=True)
+        self.execute("DELETE FROM Items WHERE True", commit=True)
 
     def drop_all(self):
         self.execute("DROP TABLE Users", commit=True)
-        self.execute("DROP TABLE Foods", commit=True)
+        self.execute("DROP TABLE Items", commit=True)
 
     @staticmethod
     def format_args(sql, parameters: dict) -> tuple:
